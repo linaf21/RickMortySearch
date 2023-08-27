@@ -28,3 +28,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* Estilos para el botón en el SearchBar */
+button.open-filter-button {
+  z-index: 50; /* Ajusta el valor según sea necesario */
+}
+
+/* Estilos para el modal en FilterComponent */
+.filter-modal {
+  z-index: 100; /* Ajusta el valor según sea necesario */
+}
