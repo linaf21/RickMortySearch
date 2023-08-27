@@ -4,22 +4,27 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        greycliff: ["Greycliff"],
+      },
       colors: {
-        principal: {
-          0: "#FBFBFB", //Fondo pantalla
-          50: "#FFFFFF", //Blanco general
-          100: "#000000", //Negro general
-          150: "#6E6E6E", //Gris iconos
-          200: "#CCD532", //Verde claro boton registrarse
-          250: "#135F2C", //Verde oscuro boton iniciar sesion
-          300: "#616161", //Gris texto tarjetas negocios,
-          350: "#E0E0E0", //bordes tarjetas,
-          400: "#C7C7C7", //Fondo proximos eventos
-          450: "#8B8B8B", //Gris flechas sliders
-          500: "#65b32e", //Verde footer
-          550: "#e17000", //Naranja bordes e icono login
-          600: "#616161", //Gris Subtitulos
-          650: "#808080", //Gris items beneficiarios
+        primary: {
+          50: "#FFFFFF",
+          100: "#000000",
+          150: "#EEE3FF",
+          200: "#8054C7",
+          250: "#5A3696",
+          300: "#63D838",
+          350: "#3B8520",
+          400: "#9CA3AF",
+          450: "#F3F4F6",
+          500: "#6B7280",
+          550: "#D1D5DB",
+          600: "#E5E7EB",
+          650: "#F9F9F9",
+          700: "#111827",
+          750: "#1F2937",
+          800: "#2563EB",
         },
       },
       spacing: {
@@ -31,7 +36,9 @@ module.exports = {
         "3/10": "30%",
         "9/20": "45%",
         "49/100": "49%",
-        "4/5": "80%",
+        "13/20": "65%",
+        "7/10": "70%",
+        "3/4": "75%",
         "4/5": "80%",
       },
     },

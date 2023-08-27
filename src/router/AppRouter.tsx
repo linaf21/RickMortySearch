@@ -1,24 +1,12 @@
-import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Home } from "../screens/HomeScreen";
+import { HomePage } from "../pages/HomePage";
+import { CharacterDetail } from "../components/homeComponents/characterDetail/CharacterDetail";
 
 export const AppRouter = () => {
     return (
-        <>
-            {/* <NavBar /> */}
-            <Routes>
-                <Route
-                    path="/*"
-                    element={
-                        <Routes>
-                            <Route path="/" element={<Navigate to={"/home"} />} />
-                            <Route path="/home" element={<Home />} />
-                            {/* <Route path="/hotel/:idServiceCenter" element={<Hotels />} /> */}
-                            <Route path="/*" element={<Navigate to={"/home"} />} />
-                        </Routes>
-                    }
-                />
-            </Routes >
-        </>
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/characterDetail/:idCharacter" element={<CharacterDetail />} />
+        </Routes>
     );
 };

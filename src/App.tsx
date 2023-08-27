@@ -1,10 +1,17 @@
-import React from 'react'
-import { Home } from './screens/HomeScreen'
+import { CharacterProvider } from './context/CharactersProvider';
+import { SideMenu } from './components/sideMenuComponents/SideMenu';
+import { AppRouter } from './router/AppRouter';
 
-export const App = () => {
+const App = () => {
+
   return (
-    <React.StrictMode>
-      <Home />
-    </React.StrictMode>
+    <CharacterProvider>
+      <div className='flex flex-wrap'>
+        <SideMenu />
+        <AppRouter />
+      </div>
+    </CharacterProvider>
   )
 }
+export default App;
+
