@@ -15,7 +15,7 @@ export const CharacterInfo = ({ isStarred, character }: CharacterInfoProps) => {
     const { addStarredCharacter, removeStarredCharacter } = useContext(CharactersContext);
 
     return (
-        <div className={`flex items-center ${isStarred ? 'mt-4' : 'mt-0'} px-2 py-4 rounded-md ${isStarred ? 'bg-primary-150' : 'bg-primary-50'} w-full`}>
+        <div className={`characterInfo items-center ${isStarred ? 'mt-4' : 'mt-0'} px-2 py-4 rounded-md ${isStarred ? 'bg-primary-150' : 'bg-primary-50'} w-full`}>
             <Link to={`characterDetail/${character.id}`} className="flex w-full">
                 <img src={character.image} alt="circular image character" className="w-8 h-8 rounded-full object-cover mr-3" />
                 <div className="flex flex-col">
@@ -23,8 +23,9 @@ export const CharacterInfo = ({ isStarred, character }: CharacterInfoProps) => {
                     <span className='text-primary-500 text-base font-greycliff font-normal leading-6'>{character.species}</span>
                 </div>
             </Link>
-            <div className={`rounded-full h-8 w-8 flex items-center justify-center ${isStarred ? 'bg-primary-50' : ''}`}>
+            <div className={`justify-self-end rounded-full h-8 w-8 flex items-center justify-center ${isStarred ? 'bg-primary-50' : ''}`}>
                 {isStarred ? (
+
                     <button onClick={() => removeStarredCharacter(character.id)}>
                         <FavoriteRoundedIcon className='text-primary-300 h-6 w-7' />
                     </button>

@@ -48,3 +48,8 @@ button.open-filter-button {
   min-height: 100vh;
   max-height: 100vh;
 }
+
+.characterInfo{
+  display: grid;
+  grid-template-columns: 90% 10%;
+}
