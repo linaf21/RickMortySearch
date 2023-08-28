@@ -4,7 +4,7 @@ Rick and Morty Search
 
 ## Introduction
 
-This README provides instructions on how to run the Rick and Morty Search app, as well as information on how to utilize the Rick and Morty API that's integrated into the project.
+This README provides instructions on how to run the Rick and Morty Search app, as well as information on how to use the Rick and Morty API that's integrated into the project.
 
 ## How to Run the App
 
