@@ -28,7 +28,7 @@ export const CharacterList = ({ title, isStarred, characterList, characterNumber
   });
 
   return (
-    <div className={` ${isStarred ? 'pt-8' : 'pt-2'} ${isStarred ? 'pb-3' : 'pb-2'} px-2`}>
+    <div className={` ${isStarred ? 'pt-8' : 'pt-3'} ${isStarred ? 'pb-3' : 'pb-2'} px-2`}>
       {characterList.length > 0 && (
         <>
           <div className='flex justify-between items-center'>

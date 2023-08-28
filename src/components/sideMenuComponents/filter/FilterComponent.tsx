@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { FilterType } from '../filterType/FilterType'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CharactersContext from '../../../context/CharactersProvider';
 
 
 interface FilterProps {
@@ -44,7 +43,16 @@ export const FilterComponent = ({ showFilterModal,
   const applyFilters = () => {
     setSelectedFilters(localSelectedFilters);
     setShowFilterModal(false);
+  };
 
+  const cleanFilters = () => {
+    setSelectedFilters({
+      character: "All",
+      specie: "All",
+      gender: "",
+      status: "",
+    });
+    setShowFilterModal(false);
   };
 
   return (
@@ -111,9 +119,14 @@ export const FilterComponent = ({ showFilterModal,
               />
             </div>
           </div>
-          <button onClick={applyFilters} className={`${isFilterSelected ? "bg-primary-200" : "bg-primary-450"} h-10 w-full my-5 rounded-md hover:scale-105 transform transition-transform`}>
+          <button onClick={applyFilters} className={`${isFilterSelected ? "bg-primary-200" : "bg-primary-450"} h-10 w-full my-2 rounded-md hover:scale-105 transform transition-transform`}>
             <span className={`${isFilterSelected ? "text-primary-50" : "text-primary-500"}  text-base font-greycliff font-semibold`}>Filter</span>
           </button>
+          {isFilterSelected && (
+            <button onClick={cleanFilters} className="bg-primary-450 h-10 w-full mb-2 rounded-md hover:scale-105 transform transition-transform">
+              <span className="text-primary-500 text-base font-greycliff font-semibold">Clean filters</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

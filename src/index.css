@@ -14,13 +14,13 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #E5E7EB;
+  background: #e5e7eb;
   border-radius: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #9CA3AF;
+  background: #9ca3af;
   border-radius: 5px;
 }
 
@@ -31,10 +31,20 @@
 
 /* Estilos para el botón en el SearchBar */
 button.open-filter-button {
-  z-index: 50; /* Ajusta el valor según sea necesario */
+  z-index: 50;
 }
 
 /* Estilos para el modal en FilterComponent */
 .filter-modal {
-  z-index: 100; /* Ajusta el valor según sea necesario */
+  z-index: 100;
+}
+
+.border-1px {
+  border-width: 1px;
+}
+
+.asideValues {
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
 }

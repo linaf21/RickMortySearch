@@ -8,6 +8,8 @@ import { LoadingComponent } from '../loading/LoadingComponent';
 import { useLocation } from 'react-router';
 import { FilterComponent } from './filter/FilterComponent';
 import { MCharacter } from '../../models/CharacterModel';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Divider } from '@mui/material';
 
 export const SideMenu = () => {
 
@@ -150,34 +152,62 @@ export const SideMenu = () => {
     setTotalFilters(cont);
   }, [selectedFilters]);
 
-
-
   return (
     <>
       {loading ? (<LoadingComponent />) : (
         <>
           <aside
             id="default-sidebar"
-            className={`top-0 relative left-0 z-40 w-full h-screen md:w-96 md:h-auto md:relative ${showFilterModal ? "hidden md:flex" : "md:flex"} ${hideSideMenu ? "hidden md:flex" : loading ? "md:flex" : ""
+            className={`top-0 relative asideValues left-0 z-40 w-full md:w-96 md:relative ${showFilterModal ? "hidden md:flex" : "md:flex"} ${hideSideMenu ? "hidden md:flex" : loading ? "md:flex" : ""
               }`}
             aria-label="Sidebar"
           >
-            <div className="h-full w-96 px-4 py-4 overflow-y-auto shadow">
+            <div className="h-full md:w-96 px-4 py-4 overflow-y-auto shadow">
+
               <div className='px-3 py-7'>
                 <span className="text-primary-700 text-2xl font-greycliff font-extrabold">Rick and Morty list</span>
               </div>
+
               <SearchBar setShowFilterModal={setShowFilterModal} showFilterModal={showFilterModal} />
+
               {isFilterSelected && (
-                <div className='flex w-full flex-wrap justify-between py-6 px-5 '>
-                  <span className='text-primary-800 text-base font-greycliff font-semibold leading-none'>{filteredCharacters.length + filteredStarredCharacters.length} {(filteredCharacters.length + filteredStarredCharacters.length) > 1 ? "Results" : "Result"}</span>
-                  <div className={`h-6 ${totalFilters > 1 ? "w-20" : "w-16"} rounded-2xl bg-primary-900 items-center justify-center flex`}>
-                    <span className='text-primary-350 text-base font-greycliff font-semibold leading-none'>{totalFilters} {totalFilters > 1 ? "Filters" : "Filter"}</span>
+                <div className="md:hidden w-full flex justify-between py-6 px-5">
+                  <button
+                    onClick={() => setShowFilterModal(!showFilterModal)}
+                    className="md:hidden text-primary-700 flex flex-wrap w-1/5"
+                  >
+                    <ArrowBackIcon className="text-primary-250 h-6 w-5 mb-5" />
+                  </button>
+                  <div className='w-7/10'>
+                    <span className="text-primary-700 text-base font-greycliff font-extrabold">Advanced search</span>
+                  </div>
+
+                  <div className='w-1/6'>
+                    <button
+                      onClick={() => setShowFilterModal(!showFilterModal)}
+                      className="md:hidden text-primary-700 flex flex-wrap w-1/5"
+                    >
+                      <span className="text-primary-250 text-base font-greycliff font-extrabold w-9/10">Done</span>
+                    </button>
                   </div>
                 </div>
               )}
+
+              {isFilterSelected && (
+                <div className='px-2 md:pt-4'>
+                  <Divider className='bg-primary-600 md:hidden flex' />
+                  <div className='flex w-full flex-wrap justify-between py-4 px-5 '>
+                    <span className='text-primary-800 text-base font-greycliff font-semibold leading-none'>{filteredCharacters.length + filteredStarredCharacters.length} {(filteredCharacters.length + filteredStarredCharacters.length) > 1 ? "Results" : "Result"}</span>
+                    <div className={`h-6 ${totalFilters > 1 ? "w-20" : "w-16"} rounded-2xl bg-primary-900 items-center justify-center flex`}>
+                      <span className='text-primary-350 text-base font-greycliff font-semibold leading-none'>{totalFilters} {totalFilters > 1 ? "Filters" : "Filter"}</span>
+                    </div>
+                  </div>
+                  <Divider className='bg-primary-600 md:hidden flex' />
+                </div>
+
+              )}
               {filteredStarredCharacters.length > 0 && (
                 <CharacterList title='STARRED CHARACTERS' characterList={filteredStarredCharacters} isStarred={true} characterNumber={starredNumber} />
-
               )}
               {filteredCharacters.length > 0 && (
                 <CharacterList title='CHARACTERS' characterList={filteredCharacters} isStarred={false} characterNumber={charactersNumber} />
