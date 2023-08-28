@@ -1,46 +1,97 @@
-# Getting Started with Create React App
+## Project Name
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Rick and Morty Search
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+This README provides instructions on how to run the ReactJS app, as well as information on how to utilize the Rick and Morty API that's integrated into the project.
 
-### `npm start`
+## How to Run the App
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To run the app locally, follow these steps:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Make sure you have Node.js and npm installed on your machine.
+2. Open your terminal and navigate to the project's root directory.
+3. Run the following command to install the project's dependencies:
 
-### `npm test`
+### `npm install`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. After the dependencies are installed, you can start the development server by running:
 
-### `npm run build`
+  ### `npm start`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   This command will start the app and open it in your default web browser at http://localhost:3000.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## How to Utilize the Rick and Morty API
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The Rick and Morty API provides access to various resources from the TV show "Rick and Morty." It offers hundreds of characters, images, locations, and episodes. You can interact with the API through REST(ish) and GraphQL queries.
 
-### `npm run eject`
+### GraphQL Query Example
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+In this project, the Rick and Morty API is used to fetch character information using a GraphQL query. Here's how it's done:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. First, make sure you have the Apollo Client installed as a dependency in your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. Define a GraphQL query for retrieving character data. In your code, it looks like this:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   ```javascript
+   const CHARACTERS_QUERY = gql`
+     {
+       characters {
+         results {
+           id
+           name
+           species
+           image
+           status
+           gender
+         }
+       }
+     }
+   `;
+   ```
 
-## Learn More
+3. Use the `useQuery` hook from Apollo Client to fetch data using the defined query. Here's how it's used:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```javascript
+   const { loading, data } = useQuery(CHARACTERS_QUERY);
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   This hook returns the `loading` state and the fetched `data`.
+
+### Integrating API in Index
+
+In the `index.js` (or `index.tsx`) file, the Apollo Client is set up to interact with the Rick and Morty GraphQL API. Here's how the integration is done:
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
+import App from './App';
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+const client = new ApolloClient({
+  uri: "https://rickandmortyapi.com/graphql",
+  cache: new InMemoryCache()
+});
+
+root.render(
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ApolloProvider>
+);
+```
+
+By following these steps, you'll be able to utilize the Rick and Morty API to fetch character information and integrate it into your ReactJS app.
+
+---
+
+Remember to refer to the official documentation of both ReactJS and the Rick and Morty API for more detailed information and advanced usage. If you have any questions or need further assistance, feel free to reach out!
+
