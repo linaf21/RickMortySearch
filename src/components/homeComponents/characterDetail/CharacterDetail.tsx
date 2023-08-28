@@ -7,7 +7,7 @@ import { SummaryComponent } from "./summary/SummaryComponent";
 export const CharacterDetail = () => {
   const { idCharacter } = useParams();
 
-  const { characterState } = useContext(CharactersContext);
+  const { characterState, } = useContext(CharactersContext);
 
   const [character, setCharacter] = useState<MCharacter>();
   const [isStarred, setIsStarred] = useState(false);
@@ -27,9 +27,11 @@ export const CharacterDetail = () => {
   }, [idCharacter, characterState]);
 
   return (
-    <div className='px-10 py-5 md:px-20 md:py-14'>
+    <div className='w-full md:w-49/100 px-10 py-5 md:px-20 md:py-14'>
       {character && (
-        <SummaryComponent character={character} isStarred={isStarred}/>
+        <SummaryComponent
+          character={character}
+          isStarred={isStarred} />
       )}
     </div>
 

@@ -1,4 +1,4 @@
-import { MCharacter, MComments } from "../models/CharacterModel";
+import { MCharacter} from "../models/CharacterModel";
 import { MCharactersState } from "../models/charactersStateModel";
 
 type CharacterAction =
@@ -6,7 +6,7 @@ type CharacterAction =
     | { type: 'addStarredCharacter', payload: MCharacter }
     | { type: 'removeStarredCharacter', payload: number }
     | { type: 'softRemoveCharacter', payload: number }
-    | { type: 'addComentCharacter', payload: MComments }
+    | { type: 'addComentCharacter', payload: { idCharacter: number; comments: string } }
 
 export const characterReducer = (state: MCharactersState, action: CharacterAction): MCharactersState => {
 
@@ -36,7 +36,7 @@ export const characterReducer = (state: MCharactersState, action: CharacterActio
                     starredCharacters: newList
                 };
             } else {
-                return state; 
+                return state;
             }
 
         case 'removeStarredCharacter':
@@ -58,14 +58,19 @@ export const characterReducer = (state: MCharactersState, action: CharacterActio
         //         ...state,
         //         username: action.payload,
         //     };
-
         case 'addComentCharacter':
-            const newCommentList = [...state.commentsList];
-            newCommentList.push(action.payload);
+            const { comments, idCharacter } = action.payload;
+          
+            const updatedCommentsList = [
+              ...state.commentsList,
+              { idCharacter, comment: comments }
+            ];
+          
             return {
-                ...state,
-                commentsList: newCommentList
+              ...state,
+              commentsList: updatedCommentsList,
             };
+
         default:
             return state;
     }

@@ -7,6 +7,7 @@ export interface MCharacter {
   species: string;
   status: string;
   gender: string;
+  comments: MComments[];
 }
 
 export interface MCharacterContextType {
@@ -20,5 +21,5 @@ export interface MCharacterContextType {
 
 export interface MComments {
   idCharacter: number;
-  comments: string[];
+  comment: string;
 }

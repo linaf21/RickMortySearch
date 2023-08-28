@@ -25,9 +25,10 @@ export const CharacterProvider = ({ children }: any) => {
   const removeStarredCharacter = (idCharacter: number) => {
     dispatch({ type: 'removeStarredCharacter', payload: idCharacter });
   }
-  const addComentCharacter = (newComments: MComments) => {
-    dispatch({ type: 'addComentCharacter', payload: newComments });
+  const addComentCharacter = (idCharacter: number, comments: string) => {
+    dispatch({ type: 'addComentCharacter', payload: { idCharacter, comments } });
   }
+
 
   return (
     <CharactersContext.Provider value={{

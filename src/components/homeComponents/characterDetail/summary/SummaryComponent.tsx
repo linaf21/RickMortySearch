@@ -1,9 +1,9 @@
 import { Divider } from "@mui/material";
-import { MCharacter } from "../../../../models/CharacterModel";
+import { MCharacter, MComments } from "../../../../models/CharacterModel";
 import { CharacterSummary } from "./CharacterSummary";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import FavoriteBorderTwoToneIcon from '@mui/icons-material/FavoriteBorderTwoTone';
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import CharactersContext from "../../../../context/CharactersProvider";
 import { ModalComponent } from "../modal/ModalComponent";
 import { Link } from "react-router-dom";
@@ -14,18 +14,28 @@ interface SummaryComponentProps {
   isStarred: boolean;
 }
 
+
 export const SummaryComponent = ({ character, isStarred }: SummaryComponentProps) => {
 
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState('');
+  const [commentsList, setCommentsList] = useState<MComments[]>([])
 
-  const handleSaveComment = () => {
-    console.log('Comment:', comment);
+  const { addStarredCharacter, removeStarredCharacter, addComentCharacter, characterState, setCharacters } = useContext(CharactersContext);
 
-    setShowModal(false);
+  const saveComment = () => {
+    if (comment.trim() !== '') {
+      addComentCharacter(character.id, comment);
+
+      setComment('');
+
+      setShowModal(false);
+    }
   };
-
-  const { addStarredCharacter, removeStarredCharacter } = useContext(CharactersContext);
+  useEffect(() => {
+    const comments = characterState.commentsList.filter(comment => comment.idCharacter === character.id);
+    setCommentsList(comments)
+  }, [characterState.commentsList, character.id]);
 
   return (
     <>
@@ -52,13 +62,14 @@ export const SummaryComponent = ({ character, isStarred }: SummaryComponentProps
           <span className='text-primary-500 text-base font-greycliff font-semibold'>Add comment</span>
         </button>
       </div>
+
       {showModal && (
         <ModalComponent
           setShowModal={setShowModal}
           showModal={showModal}
           comment={comment}
           setComment={setComment}
-          handleSaveComment={handleSaveComment} />
+          handleSaveComment={saveComment} />
       )}
 
       <div className='flex flex-col w-full'>
@@ -68,6 +79,34 @@ export const SummaryComponent = ({ character, isStarred }: SummaryComponentProps
         <Divider className='bg-primary-600' />
         <CharacterSummary title="Gender" text={character.gender} />
       </div>
+
+      {commentsList.length > 0 && (
+        <div className="pt-3">
+          <Divider className='bg-primary-600' />
+          <div className="flex flex-wrap pt-2">
+            <span className='text-primary-700 w-full text-base font-greycliff font-semibold'>Comments</span>
+
+            <div className="flex flex-col w-full pt-3">
+              {commentsList.map((comment: MComments, index: number) => (
+                <div key={index}>
+                  <span className="text-primary-500 text-base font-greycliff font-normal leading-6">{index+1}. {comment.comment}</span>
+                  {index !== commentsList.length - 1 && (
+                    <div className="py-2">
+                      <Divider className='bg-primary-600 ' />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+      )}
+
     </>
   )
 }
