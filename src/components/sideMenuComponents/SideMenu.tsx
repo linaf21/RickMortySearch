@@ -28,6 +28,7 @@ export const SideMenu = () => {
   const [filteredStarredCharacters, setFilteredStarredCharacters] = useState<MCharacter[]>([]);
   const [totalFilters, setTotalFilters] = useState(0);
   const [isFilterSelected, setIsFilterSelected] = useState(false);
+  const [filterText, setFilterText] = useState<string>('');
 
   const CHARACTERS_QUERY = gql`
   {
@@ -59,10 +60,10 @@ export const SideMenu = () => {
     if (data) {
       setCharacters(data.characters.results);
       setFilteredCharacters(data.characters.results);
-      console.log(data.characters.results);
       
     }
   }, [data]);
+
 
   useEffect(() => {
     let tempFilteredCharacters = [...characterState.characters];
@@ -172,7 +173,7 @@ export const SideMenu = () => {
                 <span className="text-primary-700 text-2xl font-greycliff font-extrabold">Rick and Morty list</span>
               </div>
 
-              <SearchBar setShowFilterModal={setShowFilterModal} showFilterModal={showFilterModal} />
+              <SearchBar filterText={filterText} setFilterText={setFilterText} setShowFilterModal={setShowFilterModal} showFilterModal={showFilterModal} />
 
               {isFilterSelected && (
                 <div className="md:hidden w-full flex justify-between py-6 px-5">
@@ -211,10 +212,10 @@ export const SideMenu = () => {
 
               )}
               {filteredStarredCharacters.length > 0 && (
-                <CharacterList title='STARRED CHARACTERS' characterList={filteredStarredCharacters} isStarred={true} characterNumber={starredNumber} />
+                <CharacterList filterText={filterText} title='STARRED CHARACTERS' characterList={filteredStarredCharacters} isStarred={true} characterNumber={starredNumber} />
               )}
               {filteredCharacters.length > 0 && (
-                <CharacterList setCharactersNumber={setCharactersNumber} title='CHARACTERS' characterList={filteredCharacters} isStarred={false} characterNumber={charactersNumber} />
+                <CharacterList filterText={filterText} setCharactersNumber={setCharactersNumber} title='CHARACTERS' characterList={filteredCharacters} isStarred={false} characterNumber={charactersNumber} />
 
               )}
             </div>

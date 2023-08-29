@@ -3,7 +3,7 @@ import { Divider } from '@mui/material';
 import { MCharacter } from '../../../models/CharacterModel';
 import { CharacterInfo } from './CharacterInfo';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
-import CharactersContext, { CharacterProvider } from '../../../context/CharactersProvider';
+import CharactersContext from '../../../context/CharactersProvider';
 
 interface CharacterListProps {
   title: string;
@@ -11,6 +11,7 @@ interface CharacterListProps {
   isStarred: boolean;
   characterNumber: number;
   setCharactersNumber?: React.Dispatch<React.SetStateAction<number>>;
+  filterText: string
 }
 
 export const CharacterList = ({
@@ -18,7 +19,8 @@ export const CharacterList = ({
   isStarred,
   characterList,
   characterNumber,
-  setCharactersNumber
+  setCharactersNumber,
+  filterText
 }: CharacterListProps) => {
 
   const [sortedAscending, setSortedAscending] = useState(true);
@@ -30,16 +32,17 @@ export const CharacterList = ({
   };
 
   useEffect(() => {
-    const sortedFilter = [...characterList].sort((a, b) => {
+    let sortedFilter = [...characterList].sort((a, b) => {
       if (sortedAscending) {
         return a.name.localeCompare(b.name);
       } else {
         return b.name.localeCompare(a.name);
       }
     });
-
+    
+    sortedFilter = sortedFilter.filter((character: MCharacter) => character.name.toLowerCase().includes(filterText.toLowerCase()));
     setSortedCharacterList(sortedFilter);
-  }, [characterList, sortedAscending]);
+  }, [characterList, sortedAscending, filterText]);
 
 
   const onSoftDelete = (index: number) => {
@@ -69,7 +72,7 @@ export const CharacterList = ({
           )}
           {sortedCharacterList.map((character: MCharacter, index: number) => (
             <div key={index}>
-              <CharacterInfo index={index} onSoftDelete={onSoftDelete} isStarred={isStarred!} character={character} />
+              <CharacterInfo index={index} onSoftDelete={onSoftDelete} isStarred={isStarred} character={character} />
               {!isStarred && index !== sortedCharacterList.length - 1 && (
                 <Divider className='bg-primary-600' />
               )}
