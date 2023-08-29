@@ -32,8 +32,8 @@ export const CharacterInfo = ({
             </Link>
             <div className={`rounded-full h-8 w-8 flex items-center justify-center ${isStarred ? 'bg-primary-50' : ''}`}>
                 {isStarred ? (
-                    <button onClick={() => removeStarredCharacter(character.id)}>
-                        <FavoriteRoundedIcon className='text-primary-300 h-6 w-7' />
+                    <button className='h-8 w-8' onClick={() => removeStarredCharacter(character.id)}>
+                        <FavoriteRoundedIcon className='text-primary-300 h-6 w-6' />
                     </button>
                 ) : (
                     <>
