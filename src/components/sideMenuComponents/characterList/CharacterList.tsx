@@ -1,31 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Divider } from '@mui/material';
 import { MCharacter } from '../../../models/CharacterModel';
 import { CharacterInfo } from './CharacterInfo';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
+import CharactersContext, { CharacterProvider } from '../../../context/CharactersProvider';
 
 interface CharacterListProps {
   title: string;
   characterList: MCharacter[];
   isStarred: boolean;
   characterNumber: number;
+  setCharactersNumber?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const CharacterList = ({ title, isStarred, characterList, characterNumber }: CharacterListProps) => {
+export const CharacterList = ({
+  title,
+  isStarred,
+  characterList,
+  characterNumber,
+  setCharactersNumber
+}: CharacterListProps) => {
 
   const [sortedAscending, setSortedAscending] = useState(true);
+  const [sortedCharacterList, setSortedCharacterList] = useState<MCharacter[]>([]);
+  const { setCharacters } = useContext(CharactersContext);
 
   const toggleSorting = () => {
     setSortedAscending(!sortedAscending);
   };
 
-  const sortedCharacterList = [...characterList].sort((a, b) => {
-    if (sortedAscending) {
-      return a.name.localeCompare(b.name);
-    } else {
-      return b.name.localeCompare(a.name);
+  useEffect(() => {
+    const sortedFilter = [...characterList].sort((a, b) => {
+      if (sortedAscending) {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    setSortedCharacterList(sortedFilter);
+  }, [characterList]);
+
+
+  const onSoftDelete = (index: number) => {
+    const updatedCharacterList = sortedCharacterList.filter((_, i) => i !== index);
+    setSortedCharacterList(updatedCharacterList);
+    if (setCharactersNumber) {
+      setCharacters(updatedCharacterList);
+      setCharactersNumber(updatedCharacterList.length)
     }
-  });
+  }
 
   return (
     <div className={` ${isStarred ? 'pt-8' : 'pt-3'} ${isStarred ? 'pb-3' : 'pb-2'} px-2`}>
@@ -45,7 +69,7 @@ export const CharacterList = ({ title, isStarred, characterList, characterNumber
           )}
           {sortedCharacterList.map((character: MCharacter, index: number) => (
             <div key={index}>
-              <CharacterInfo isStarred={isStarred!} character={character} />
+              <CharacterInfo index={index} onSoftDelete={onSoftDelete} isStarred={isStarred!} character={character} />
               {!isStarred && index !== sortedCharacterList.length - 1 && (
                 <Divider className='bg-primary-600' />
               )}

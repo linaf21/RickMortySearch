@@ -51,5 +51,10 @@ button.open-filter-button {
 
 .characterInfo{
   display: grid;
+  grid-template-columns: 80% 10% 10%;
+}
+
+.characterStarredInfo{
+  display: grid;
   grid-template-columns: 90% 10%;
 }

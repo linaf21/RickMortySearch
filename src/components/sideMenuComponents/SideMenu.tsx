@@ -10,6 +10,7 @@ import { FilterComponent } from './filter/FilterComponent';
 import { MCharacter } from '../../models/CharacterModel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Divider } from '@mui/material';
+import { CharacterType, Gender, Specie, Status } from '../../utils/constants';
 
 export const SideMenu = () => {
 
@@ -18,8 +19,8 @@ export const SideMenu = () => {
   const hideSideMenu = location.pathname.startsWith("/characterDetail");
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
-    character: 'All',
-    specie: 'All',
+    character: CharacterType.All,
+    specie: Specie.All,
     gender: '',
     status: '',
   });
@@ -65,13 +66,13 @@ export const SideMenu = () => {
     let tempFilteredCharacters = [...characterState.characters];
     let tempFilteredStarredCharacters = [...characterState.starredCharacters];
 
-    if (selectedFilters.character == "Others") {
+    if (selectedFilters.character == CharacterType.Others) {
       tempFilteredStarredCharacters = [];
-    } else if (selectedFilters.character == 'Starred') {
+    } else if (selectedFilters.character == CharacterType.Starred) {
       tempFilteredCharacters = [];
     }
 
-    if (selectedFilters.specie !== "All") {
+    if (selectedFilters.specie !== Specie.All) {
       tempFilteredCharacters = tempFilteredCharacters.filter(
         (character) => character.species === selectedFilters.specie
       );
@@ -80,21 +81,21 @@ export const SideMenu = () => {
       );
     }
 
-    if (selectedFilters.gender == "Male") {
+    if (selectedFilters.gender == Gender.Male) {
       tempFilteredCharacters = tempFilteredCharacters.filter(
         (character) => character.gender === selectedFilters.gender
       );
       tempFilteredStarredCharacters = tempFilteredStarredCharacters.filter(
         (character) => character.gender === selectedFilters.gender
       );
-    } else if (selectedFilters.gender == 'Female') {
+    } else if (selectedFilters.gender == Gender.Female) {
       tempFilteredCharacters = tempFilteredCharacters.filter(
         (character) => character.gender === selectedFilters.gender
       );
       tempFilteredStarredCharacters = tempFilteredStarredCharacters.filter(
         (character) => character.gender === selectedFilters.gender
       );
-    } else if (selectedFilters.gender == 'Unknown') {
+    } else if (selectedFilters.gender == Gender.Unknown) {
       tempFilteredCharacters = tempFilteredCharacters.filter(
         (character) => character.gender === selectedFilters.gender
       );
@@ -103,21 +104,21 @@ export const SideMenu = () => {
       );
     }
 
-    if (selectedFilters.status == "Alive") {
+    if (selectedFilters.status == Status.Alive) {
       tempFilteredCharacters = tempFilteredCharacters.filter(
         (character) => character.status === selectedFilters.status
       );
       tempFilteredStarredCharacters = tempFilteredStarredCharacters.filter(
         (character) => character.status === selectedFilters.status
       );
-    } else if (selectedFilters.status == 'Dead') {
+    } else if (selectedFilters.status == Status.Dead) {
       tempFilteredCharacters = tempFilteredCharacters.filter(
         (character) => character.status === selectedFilters.status
       );
       tempFilteredStarredCharacters = tempFilteredStarredCharacters.filter(
         (character) => character.status === selectedFilters.status
       );
-    } else if (selectedFilters.status == 'Unknown') {
+    } else if (selectedFilters.status == Status.Unknown) {
       tempFilteredCharacters = tempFilteredCharacters.filter(
         (character) => character.status === selectedFilters.status
       );
@@ -133,24 +134,25 @@ export const SideMenu = () => {
 
   useEffect(() => {
     let cont: number = 0;
-    if (selectedFilters.character !== "All") {
+    if (selectedFilters.character !== CharacterType.All) {
       setIsFilterSelected(true);
       cont++;
     }
-    if (selectedFilters.specie !== "All") {
+    if (selectedFilters.specie !== Specie.All) {
       setIsFilterSelected(true);
       cont++;
     }
-    if (selectedFilters.gender === "Male" || selectedFilters.gender === "Female" || selectedFilters.gender === "Unknown") {
+    if (selectedFilters.gender === Gender.Male || selectedFilters.gender === Gender.Female || selectedFilters.gender === Gender.Unknown) {
       cont++;
       setIsFilterSelected(true);
     }
-    if (selectedFilters.status === "Alive" || selectedFilters.status === "Dead" || selectedFilters.status === "Unknown") {
+    if (selectedFilters.status === Status.Alive || selectedFilters.status === Status.Dead || selectedFilters.status === Status.Unknown) {
       cont++;
       setIsFilterSelected(true);
     }
     setTotalFilters(cont);
   }, [selectedFilters]);
+
 
   return (
     <>
@@ -210,7 +212,7 @@ export const SideMenu = () => {
                 <CharacterList title='STARRED CHARACTERS' characterList={filteredStarredCharacters} isStarred={true} characterNumber={starredNumber} />
               )}
               {filteredCharacters.length > 0 && (
-                <CharacterList title='CHARACTERS' characterList={filteredCharacters} isStarred={false} characterNumber={charactersNumber} />
+                <CharacterList setCharactersNumber={setCharactersNumber} title='CHARACTERS' characterList={filteredCharacters} isStarred={false} characterNumber={charactersNumber} />
 
               )}
             </div>
@@ -222,10 +224,8 @@ export const SideMenu = () => {
             setSelectedFilters={setSelectedFilters}
             isFilterSelected={isFilterSelected}
           />}
-
         </>
       )}
     </>
-
   )
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Filters } from '../../../utils/constants';
 
 interface Option {
   name: string;
 }
 
 interface FilterTypeProps {
-  filterType: string;
+  filterType: Filters;
   options: Option[];
   selectedFilter: string;
   onFilterChange: (filterType: any, value: any) => void

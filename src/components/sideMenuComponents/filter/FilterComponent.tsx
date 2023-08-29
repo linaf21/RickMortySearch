@@ -1,23 +1,25 @@
 import React, { useContext, useState } from 'react'
 import { FilterType } from '../filterType/FilterType'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { CharacterType, Gender, Specie, Status, Filters } from '../../../utils/constants';
 
 
 interface FilterProps {
   showFilterModal: boolean;
   setShowFilterModal: React.Dispatch<React.SetStateAction<boolean>>;
   selectedFilters: {
-    character: string;
-    specie: string;
+    character: CharacterType;
+    specie: Specie;
     gender: string;
     status: string;
   };
   setSelectedFilters: React.Dispatch<React.SetStateAction<{
-    character: string;
-    specie: string;
+    character: CharacterType;
+    specie: Specie;
     gender: string;
     status: string;
   }>>
+  ;
   isFilterSelected: boolean;
 }
 export const FilterComponent = ({ showFilterModal,
@@ -47,8 +49,8 @@ export const FilterComponent = ({ showFilterModal,
 
   const cleanFilters = () => {
     setSelectedFilters({
-      character: "All",
-      specie: "All",
+      character: CharacterType.All,
+      specie: Specie.All,
       gender: "",
       status: "",
     });
@@ -73,22 +75,22 @@ export const FilterComponent = ({ showFilterModal,
         <div className="relative md:my-6 md:w-full border-0 md:rounded-lg md:shadow-lg flex flex-col md:h-full bg-white outline-none focus:outline-none px-5 justify-center  overflow-x-hidden overflow-y-auto z-50">
           <div className='mt-7 md:mt-0'>
             <FilterType
-              filterType="character"
+              filterType={Filters.Character}
               options={[
-                { name: "All" },
-                { name: "Starred" },
-                { name: "Others" },
+                { name: CharacterType.All },
+                { name: CharacterType.Starred },
+                { name: CharacterType.Others },
               ]}
               selectedFilter={selectedFilters.character}
               onFilterChange={handleFilterChange}
             />
             <div className="py-3">
               <FilterType
-                filterType="specie"
+                filterType={Filters.Specie}
                 options={[
-                  { name: "All" },
-                  { name: "Human" },
-                  { name: "Alien" },
+                  { name: Specie.All },
+                  { name: Specie.Human },
+                  { name: Specie.Alien },
                 ]}
                 selectedFilter={selectedFilters.specie}
                 onFilterChange={handleFilterChange}
@@ -96,11 +98,11 @@ export const FilterComponent = ({ showFilterModal,
             </div>
             <div className="py-3">
               <FilterType
-                filterType="gender"
+                filterType={Filters.Gender}
                 options={[
-                  { name: "Male" },
-                  { name: "Female" },
-                  { name: "Unknown" },
+                  { name: Gender.Male },
+                  { name: Gender.Female },
+                  { name: Gender.Unknown },
                 ]}
                 selectedFilter={selectedFilters.specie}
                 onFilterChange={handleFilterChange}
@@ -108,11 +110,11 @@ export const FilterComponent = ({ showFilterModal,
             </div>
             <div className="py-3">
               <FilterType
-                filterType="status"
+                filterType={Filters.Status}
                 options={[
-                  { name: "Alive" },
-                  { name: "Dead" },
-                  { name: "Unknown" },
+                  { name: Status.Alive },
+                  { name: Status.Dead },
+                  { name: Status.Unknown },
                 ]}
                 selectedFilter={selectedFilters.specie}
                 onFilterChange={handleFilterChange}
