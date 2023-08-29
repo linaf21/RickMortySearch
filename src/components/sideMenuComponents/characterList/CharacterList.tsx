@@ -39,7 +39,7 @@ export const CharacterList = ({
     });
 
     setSortedCharacterList(sortedFilter);
-  }, [characterList]);
+  }, [characterList, sortedAscending]);
 
 
   const onSoftDelete = (index: number) => {

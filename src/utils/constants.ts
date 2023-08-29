@@ -1,13 +1,13 @@
 export enum Gender {
   Female = "Female",
   Male = "Male",
-  Unknown = "Unknown",
+  Unknown = "unknown",
 }
 
 export enum Status {
   Alive = "Alive",
   Dead = "Dead",
-  Unknown = "Unknown",
+  Unknown = "unknown",
 }
 
 export enum CharacterType {

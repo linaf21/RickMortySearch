@@ -59,6 +59,8 @@ export const SideMenu = () => {
     if (data) {
       setCharacters(data.characters.results);
       setFilteredCharacters(data.characters.results);
+      console.log(data.characters.results);
+      
     }
   }, [data]);
 
